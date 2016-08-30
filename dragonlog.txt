@@ -1,0 +1,79 @@
+Dragon Stats {
+    "dragon": {
+        "scaleThickness": 1,
+        "clawSharpness": 2,
+        "wingStrength": 9,
+        "fireBreath": 10
+    }
+} Server Response {"status":"Defeat","message":"Dragon died of performance enhancement drug overdose: More than 20 points given"}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 1,
+        "clawSharpness": 2,
+        "wingStrength": 8,
+        "fireBreath": 9
+    }
+} Server Response {"status":"Victory","message":"Knight was useless in the fog."}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 0,
+        "clawSharpness": 0,
+        "wingStrength": 10,
+        "fireBreath": 10
+    }
+} Server Response {"status":"Victory","message":"Knight was useless in the fog."}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 3,
+        "clawSharpness": 4,
+        "wingStrength": 6,
+        "fireBreath": 7
+    }
+} Server Response {"status":"Victory","message":"Knight was useless in the fog."}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 1,
+        "clawSharpness": 9,
+        "wingStrength": 5,
+        "fireBreath": 5
+    }
+} Server Response {"status":"Defeat","message":"Dragon could not compete with knights attack"}Dragon Stats {
+   Dragon Stats {
+    "dragon": {
+        "scaleThickness": 8,
+        "clawSharpness": 2,
+        "wingStrength": 2,
+        "fireBreath": 8
+    }
+} Server Response {"status":"Defeat","message":"Dragon was not balanced enough to put up with the heat."}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 0,
+        "clawSharpness": 0,
+        "wingStrength": 10,
+        "fireBreath": 10
+    }
+} Server Response {"status":"Victory","message":"Dragon was zen enough to defeat the knight."}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 5,
+        "clawSharpness": 5,
+        "wingStrength": 5,
+        "fireBreath": 5
+    }
+} Server Response {"status":"Victory","message":"Dragon was zen enough to defeat the knight."}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 4,
+        "clawSharpness": 3,
+        "wingStrength": 4,
+        "fireBreath": 9
+    }
+} Server Response {"status":"Defeat","message":"Dragon could not compete with knights armor"}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 4,
+        "clawSharpness": 7,
+        "wingStrength": 1,
+        "fireBreath": 8
+    }
+} Server Response {"status":"Defeat","message":"Dragon could not compete with knights agility"}Dragon Stats {
+    "dragon": {
+        "scaleThickness": 2,
+        "clawSharpness": 7,
+        "wingStrength": 3,
+        "fireBreath": 8
+    }
+} 
