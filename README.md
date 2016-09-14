@@ -10,5 +10,5 @@ If there is network error the page will not be loaded further, but instead error
 
 JavaClient
 ********************************************************************************************************************************
-But the this version make use of javadev(Dragons-of-Mugloar libraries) to create java client that fetch Game, Weather Report, and submit game solution. The Main Class is in embeded in (dragons-of-mugloar\target\classes\com\github\javadev\undescriptive\client.PlayGame.class).
+But the this version make use of javadev(Dragons-of-Mugloar libraries) to create java client that fetch Game, Weather Report, and submit game solution. The Main Class is embeded in (dragons-of-mugloar\target\classes\com\github\javadev\undescriptive\client.PlayGame.class).
 Thanks.
