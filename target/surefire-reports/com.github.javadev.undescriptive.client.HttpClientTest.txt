@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.github.javadev.undescriptive.client.HttpClientTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 300.578 sec - in com.github.javadev.undescriptive.client.HttpClientTest

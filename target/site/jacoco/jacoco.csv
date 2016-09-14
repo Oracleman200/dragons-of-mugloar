@@ -1,0 +1,12 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.1.new HashMap() {...},30,0,0,0,6,0,1,0,1,0
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient,11,1475,4,12,3,41,4,15,0,11
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.CallableImpl,6,67,2,2,1,15,2,2,0,2
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.4.new HashMap() {...},0,46,0,0,0,6,0,1,0,1
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.new HashMap() {...},14,0,0,0,3,0,1,0,1,0
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.new HashMap() {...},14,0,0,0,3,0,1,0,1,0
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,GameCounters,0,27,0,0,0,7,0,4,0,4
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.new HashMap() {...},0,17,0,0,0,3,0,1,0,1
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.new Comparator() {...},0,23,0,0,0,2,0,2,0,2
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,HttpClient.2.new HashMap() {...},30,0,0,0,6,0,1,0,1,0
+com.github.javadev:undescriptive-project,com.github.javadev.undescriptive.client,PlayGame,60,0,4,0,11,0,4,0,2,0

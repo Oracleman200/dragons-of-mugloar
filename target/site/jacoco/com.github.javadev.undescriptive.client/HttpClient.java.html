@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">com.github.javadev:undescriptive-project</a> &gt; <a href="index.source.html" class="el_package">com.github.javadev.undescriptive.client</a> &gt; <span class="el_source">HttpClient.java</span></div><h1>HttpClient.java</h1><pre class="source lang-java linenums">package com.github.javadev.undescriptive.client;
+
+import com.github.underscore.lodash.$;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class HttpClient implements GameClient {
+    private static final String BASE_URL = &quot;http://www.dragonsofmugloar.com&quot;;
+    private static final String WEATHER_URL = &quot;/weather/api/report/&quot;;
+
+<span class="fc" id="L18">    private static final int[][] SOLUTIONS = {</span>
+        {8, 8, 4, 0}, {10, 6, 3, 1},
+        {8, 7, 5, 0}, {10, 5, 4, 1},
+        {8, 6, 6, 0}, {10, 4, 4, 2},
+        {7, 7, 6, 0}, {10, 4, 4, 2},
+        {8, 8, 3, 1}, {10, 6, 2, 2},
+        {8, 7, 4, 1}, {10, 5, 4, 1},
+        {8, 6, 5, 1}, {10, 4, 5, 1},
+        {7, 7, 5, 1}, {9, 5, 4, 2},
+        {7, 6, 6, 1}, {9, 4, 4, 3},
+        {8, 8, 2, 2}, {10, 6, 3, 1},
+        {8, 7, 3, 2}, {10, 5, 4, 1},
+        {8, 6, 4, 2}, {10, 4, 3, 3},
+        {7, 7, 4, 2}, {10, 5, 4, 1},
+        {8, 5, 5, 2}, {10, 5, 4, 1},
+        {7, 6, 5, 2}, {10, 4, 4, 2},
+        {6, 6, 6, 2}, {10, 4, 3, 3},
+        {8, 6, 3, 3}, {10, 4, 4, 2},
+        {7, 7, 3, 3}, {10, 4, 4, 2},
+        {8, 5, 4, 3}, {10, 4, 4, 2},
+        {7, 6, 4, 3}, {9, 4, 5, 2},
+        {7, 5, 5, 3}, {9, 5, 4, 2},
+        {6, 6, 5, 3}, {8, 5, 4, 3},
+        {8, 4, 4, 4}, {10, 4, 3, 3},
+        {7, 5, 4, 4}, {10, 4, 3, 3},
+        {6, 6, 4, 4}, {10, 4, 3, 3},
+        {6, 5, 5, 4}, {10, 4, 3, 3},
+        {5, 5, 5, 5}, {10, 4, 3, 3}
+        };
+
+    private final String baseUrl;
+
+<span class="fc" id="L50">    private HttpClient(final String baseUrl) {</span>
+<span class="fc" id="L51">        this.baseUrl = baseUrl;</span>
+<span class="fc" id="L52">    }</span>
+
+    public static HttpClient createDefault() {
+<span class="fc" id="L55">        return new HttpClient(BASE_URL);</span>
+    }
+
+    private $.FetchResponse get(final String resourceUrl) {
+<span class="fc" id="L59">        return $.fetch(this.baseUrl + resourceUrl);</span>
+    }
+
+    private Map&lt;String, Object&gt; put(final String resourceUrl, final Map&lt;String, Object&gt; params) {
+<span class="fc" id="L63">        Map&lt;String, Object&gt; result = (Map&lt;String, Object&gt;) $.fetch(this.baseUrl + resourceUrl, &quot;PUT&quot;, $.toJson(params)).json();</span>
+<span class="fc" id="L64">        return result;</span>
+    }
+
+    @Override
+    public Map&lt;String, Object&gt; getGame() {
+<span class="fc" id="L69">        return (Map&lt;String, Object&gt;) get(&quot;/api/game&quot;).json();</span>
+    }
+
+    @Override
+    public Map&lt;String, Object&gt; getWeather(Long id) {
+<span class="fc" id="L74">        return (Map&lt;String, Object&gt;) $.fromXml(get(WEATHER_URL + id).text());</span>
+    }
+
+    @Override
+    public Map&lt;String, Object&gt; sendSolution(Long id, Map&lt;String, Object&gt; solutionRequest) {
+<span class="fc" id="L79">        return put(&quot;/api/game/&quot; + id + &quot;/solution&quot;, solutionRequest);</span>
+    }
+
+    @Override
+    public Map&lt;String, Object&gt; generateGameSolution(Map&lt;String, Object&gt; gameResponseItem, Map&lt;String, Object&gt; weatherResponse) {
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (&quot;T E&quot;.equals((String) $.get(weatherResponse, &quot;code&quot;))) {</span>
+<span class="nc" id="L85">            return new HashMap&lt;String, Object&gt;() { {</span>
+<span class="nc" id="L86">                put(&quot;dragon&quot;, new HashMap&lt;String, Object&gt;() { {</span>
+<span class="nc" id="L87">                    put(&quot;scaleThickness&quot;, 5);</span>
+<span class="nc" id="L88">                    put(&quot;clawSharpness&quot;, 5);</span>
+<span class="nc" id="L89">                    put(&quot;wingStrength&quot;, 5);</span>
+<span class="nc" id="L90">                    put(&quot;fireBreath&quot;, 5);</span>
+<span class="nc" id="L91">               } });</span>
+<span class="nc" id="L92">            } };</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        } else if (&quot;HVA&quot;.equals((String) $.get(weatherResponse, &quot;code&quot;))) {</span>
+<span class="nc" id="L94">            return new HashMap&lt;String, Object&gt;() { {</span>
+<span class="nc" id="L95">                put(&quot;dragon&quot;, new HashMap&lt;String, Object&gt;() { {</span>
+<span class="nc" id="L96">                    put(&quot;scaleThickness&quot;, 10);</span>
+<span class="nc" id="L97">                    put(&quot;clawSharpness&quot;, 10);</span>
+<span class="nc" id="L98">                    put(&quot;wingStrength&quot;, 0);</span>
+<span class="nc" id="L99">                    put(&quot;fireBreath&quot;, 0);</span>
+<span class="nc" id="L100">               } });</span>
+<span class="nc" id="L101">            } };</span>
+        }
+
+<span class="fc" id="L104">        final List&lt;Long&gt; knightAttrs = Arrays.asList((Long) $.get(gameResponseItem, &quot;attack&quot;),</span>
+            (Long) $.get(gameResponseItem, &quot;armor&quot;), (Long) $.get(gameResponseItem, &quot;agility&quot;),
+            (Long) $.get(gameResponseItem, &quot;endurance&quot;));
+<span class="fc" id="L107">        final Integer[] indexes = { 0, 1, 2, 3 };</span>
+
+<span class="fc" id="L109">        Arrays.sort(indexes, new Comparator&lt;Integer&gt;() {</span>
+            @Override public int compare(final Integer o1, final Integer o2) {
+<span class="fc" id="L111">                return knightAttrs.get(o1).compareTo(knightAttrs.get(o2));</span>
+            }
+        });
+<span class="fc" id="L114">        int maxIndex = indexes[3];</span>
+<span class="fc" id="L115">        int secondMaxIndex = indexes[2];</span>
+<span class="fc" id="L116">        int thirdMaxIndex = indexes[1];</span>
+<span class="fc" id="L117">        int forthMaxIndex = indexes[0];</span>
+<span class="fc" id="L118">        final int[] dragonAttrs = new int[] {0, 0, 0, 0};</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        for (int index = 0; index &lt; SOLUTIONS.length; index += 2) {</span>
+<span class="pc bpc" id="L120" title="1 of 8 branches missed.">            if (knightAttrs.get(maxIndex) == SOLUTIONS[index][0]</span>
+                &amp;&amp; knightAttrs.get(secondMaxIndex) == SOLUTIONS[index][1]
+                &amp;&amp; knightAttrs.get(thirdMaxIndex) == SOLUTIONS[index][2]
+                &amp;&amp; knightAttrs.get(forthMaxIndex) == SOLUTIONS[index][3]) {
+<span class="fc" id="L124">                dragonAttrs[maxIndex] = SOLUTIONS[index + 1][0];</span>
+<span class="fc" id="L125">                dragonAttrs[secondMaxIndex] = SOLUTIONS[index + 1][1];</span>
+<span class="fc" id="L126">                dragonAttrs[thirdMaxIndex] = SOLUTIONS[index + 1][2];</span>
+<span class="fc" id="L127">                dragonAttrs[forthMaxIndex] = SOLUTIONS[index + 1][3];</span>
+<span class="fc" id="L128">                break;</span>
+            }
+        }
+<span class="fc" id="L131">        return new HashMap&lt;String, Object&gt;() { {</span>
+<span class="fc" id="L132">            put(&quot;dragon&quot;, new HashMap&lt;String, Object&gt;() { {</span>
+<span class="fc" id="L133">                put(&quot;scaleThickness&quot;, dragonAttrs[0]);</span>
+<span class="fc" id="L134">                put(&quot;clawSharpness&quot;, dragonAttrs[1]);</span>
+<span class="fc" id="L135">                put(&quot;wingStrength&quot;, dragonAttrs[2]);</span>
+<span class="fc" id="L136">                put(&quot;fireBreath&quot;, dragonAttrs[3]);</span>
+<span class="fc" id="L137">            } });</span>
+<span class="fc" id="L138">        } };</span>
+    }
+
+    private static class CallableImpl implements Callable&lt;Void&gt; {
+
+        private final HttpClient httpClient;
+        private final GameCounters gameCounters;
+
+<span class="fc" id="L146">        public CallableImpl(HttpClient httpClient, GameCounters gameCounters) {</span>
+<span class="fc" id="L147">            this.httpClient = httpClient;</span>
+<span class="fc" id="L148">            this.gameCounters = gameCounters;</span>
+<span class="fc" id="L149">        }</span>
+
+        public Void call() {
+            try {
+<span class="fc" id="L153">                final Map&lt;String, Object&gt; game = httpClient.getGame();</span>
+<span class="fc" id="L154">                final Map&lt;String, Object&gt; weatherResponse = httpClient.getWeather((Long) $.get(game, &quot;gameId&quot;));</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">                if (&quot;SRO&quot;.equals((String) $.get(weatherResponse, &quot;code&quot;))) {</span>
+<span class="nc" id="L156">                    gameCounters.getStormCount().getAndIncrement();</span>
+                } else {
+<span class="fc" id="L158">                    final Map&lt;String, Object&gt; request = httpClient.generateGameSolution((Map&lt;String, Object&gt;) $.get(game, &quot;knight&quot;), weatherResponse);</span>
+<span class="fc" id="L159">                    final Map&lt;String, Object&gt; response = httpClient.sendSolution((Long) $.get(game, &quot;gameId&quot;), request);</span>
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">                    if (&quot;Victory&quot;.equals((String) $.get(response, &quot;status&quot;))) {</span>
+<span class="fc" id="L161">                        gameCounters.getVictoryCount().getAndIncrement();</span>
+                    }
+                }
+<span class="fc" id="L164">            } catch (Exception ex) {</span>
+<span class="fc" id="L165">                gameCounters.getErrorCount().getAndIncrement();</span>
+<span class="fc" id="L166">            }</span>
+<span class="fc" id="L167">            return null;</span>
+        }
+    }
+
+    @Override
+    public GameCounters getAndSolveGames(int amountOfGames) {
+<span class="fc" id="L173">        final GameCounters gameCounters = new GameCounters();</span>
+<span class="fc" id="L174">        final ExecutorService executor = Executors.newFixedThreadPool(100);</span>
+<span class="fc" id="L175">        final List&lt;Callable&lt;Void&gt;&gt; callables = new ArrayList&lt;Callable&lt;Void&gt;&gt;();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        for (int gameIndex = 0; gameIndex &lt; amountOfGames; gameIndex += 1) {</span>
+<span class="fc" id="L177">            callables.add(new CallableImpl(this, gameCounters));</span>
+        }
+        try {
+<span class="fc" id="L180">            executor.invokeAll(callables);</span>
+<span class="nc" id="L181">        } catch (InterruptedException ex) {</span>
+<span class="fc" id="L182">        }</span>
+<span class="fc" id="L183">        executor.shutdown();</span>
+<span class="fc" id="L184">        return gameCounters;</span>
+    }
+
+    public static void main(String ... args) {
+<span class="fc" id="L188">        final String message = &quot;Dragons of Mugloar solution.\n\n&quot;</span>
+            + &quot;For docs, license, tests, and downloads, see: https://github.com/javadev/undescriptive-project&quot;;
+<span class="fc" id="L190">        System.out.println(message);</span>
+<span class="fc" id="L191">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>
